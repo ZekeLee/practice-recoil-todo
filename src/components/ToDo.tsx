@@ -2,6 +2,31 @@ import React from 'react';
 import { useSetRecoilState } from 'recoil';
 import { Categories, IToDo, toDoState } from '../atoms';
 
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faArrowRotateLeft,
+  faCheck,
+  faHourglass,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
+
+const Item = styled.li`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  span {
+    flex-grow: 1;
+  }
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
 const ToDo = ({ text, category, id }: IToDo) => {
   const setToDos = useSetRecoilState(toDoState);
 
@@ -30,27 +55,30 @@ const ToDo = ({ text, category, id }: IToDo) => {
   };
 
   return (
-    <li>
+    <Item>
+      📌
       <span>{text}</span>
-      {category !== Categories.TO_DO && (
-        <button type="button" name="TO_DO" onClick={onChangeState}>
-          To Do
+      <ButtonBox>
+        {category !== Categories.TO_DO && (
+          <button type="button" name="TO_DO" onClick={onChangeState}>
+            <FontAwesomeIcon icon={faArrowRotateLeft} />
+          </button>
+        )}
+        {category !== Categories.DOING && (
+          <button type="button" name="DOING" onClick={onChangeState}>
+            <FontAwesomeIcon icon={faHourglass} />
+          </button>
+        )}
+        {category !== Categories.DONE && (
+          <button type="button" name="DONE" onClick={onChangeState}>
+            <FontAwesomeIcon icon={faCheck} />
+          </button>
+        )}
+        <button type="button" onClick={removeToDo}>
+          <FontAwesomeIcon icon={faXmark} />
         </button>
-      )}
-      {category !== Categories.DOING && (
-        <button type="button" name="DOING" onClick={onChangeState}>
-          Doing
-        </button>
-      )}
-      {category !== Categories.DONE && (
-        <button type="button" name="DONE" onClick={onChangeState}>
-          Done
-        </button>
-      )}
-      <button type="button" onClick={removeToDo}>
-        x
-      </button>
-    </li>
+      </ButtonBox>
+    </Item>
   );
 };
 

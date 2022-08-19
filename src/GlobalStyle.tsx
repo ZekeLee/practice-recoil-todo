@@ -19,14 +19,24 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #root{
+    display:flex;
+    flex-direction:column;
+    gap:1.5rem;
     margin: 0 auto;
-    padding: 0 1rem 1rem 1rem;
+    padding: 1rem 1rem 0 1rem;
     max-width: 480px;
+    height:100%;
   }
 
   main{display:flex;flex-direction:column;gap:1.5rem;}
 
+
   a{color:inherit;text-decoration:none;}
-`;
+
+  button, input, select{all:unset;appearance:none;box-sizing:border-box;}
+  
+  button{cursor:pointer;}
+
+  `;
 
 export default GlobalStyle;
