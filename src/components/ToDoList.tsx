@@ -15,8 +15,6 @@ const ToDoList = () => {
     setCategory(value as Categories);
   };
 
-  console.log(toDos);
-
   return (
     <div>
       <select onInput={onInput} value={category}>

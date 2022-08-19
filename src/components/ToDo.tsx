@@ -4,6 +4,7 @@ import { Categories, IToDo, toDoState } from '../atoms';
 
 const ToDo = ({ text, category, id }: IToDo) => {
   const setToDos = useSetRecoilState(toDoState);
+
   const onChangeState = (e: React.MouseEvent<HTMLButtonElement>) => {
     const {
       currentTarget: { name },
@@ -13,6 +14,16 @@ const ToDo = ({ text, category, id }: IToDo) => {
       const newToDo = { text, id, category: name as Categories };
       const newToDos = [...prevToDos];
       newToDos.splice(targetIndex, 1, newToDo);
+
+      return newToDos;
+    });
+  };
+
+  const removeToDo = () => {
+    setToDos((prevToDos) => {
+      const targetIndex = prevToDos.findIndex((todo) => todo.id === id);
+      const newToDos = [...prevToDos];
+      newToDos.splice(targetIndex, 1);
 
       return newToDos;
     });
@@ -36,6 +47,9 @@ const ToDo = ({ text, category, id }: IToDo) => {
           Done
         </button>
       )}
+      <button type="button" onClick={removeToDo}>
+        x
+      </button>
     </li>
   );
 };

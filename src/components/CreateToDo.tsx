@@ -24,6 +24,10 @@ const CreateToDo = () => {
         type="text"
         {...register('toDo', {
           required: 'Please write a to do',
+          minLength: {
+            value: 5,
+            message: 'At least 5 characters',
+          },
         })}
       />
       <button type="submit">Add</button>
