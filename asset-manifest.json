@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/practice-recoil-todo/static/js/main.e122653d.js",
+    "main.js": "/practice-recoil-todo/static/js/main.f3459447.js",
     "index.html": "/practice-recoil-todo/index.html",
-    "main.e122653d.js.map": "/practice-recoil-todo/static/js/main.e122653d.js.map"
+    "main.f3459447.js.map": "/practice-recoil-todo/static/js/main.f3459447.js.map"
   },
   "entrypoints": [
-    "static/js/main.e122653d.js"
+    "static/js/main.f3459447.js"
   ]
 }
