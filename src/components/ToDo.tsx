@@ -1,18 +1,13 @@
-import React from 'react';
-import { useSetRecoilState } from 'recoil';
-import { Categories, IToDo, toDoState } from '../atoms';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { categoriesState, IToDo, toDoState } from '../atoms';
 
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faArrowRotateLeft,
-  faCheck,
-  faHourglass,
-  faXmark,
-} from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const Item = styled.li`
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
@@ -21,22 +16,41 @@ const Item = styled.li`
   }
 `;
 
-const ButtonBox = styled.div`
+const CategoryTab = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
 `;
 
+const Tab = styled.button.attrs({ type: 'button' })<{ disabled: boolean }>`
+  padding: 0.5rem;
+  color: ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.boxColor};
+  border-radius: 5px;
+  display: ${(props) => (props.disabled ? 'none' : 'block')};
+`;
+
+const TextWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  div {
+    display: flex;
+    gap: 0.5rem;
+  }
+`;
+
 const ToDo = ({ text, category, id }: IToDo) => {
   const setToDos = useSetRecoilState(toDoState);
+  const categories = useRecoilValue(categoriesState);
 
-  const onChangeState = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const {
-      currentTarget: { name },
-    } = e;
+  const onChangeState = (category: string) => {
     setToDos((prevToDos) => {
       const targetIndex = prevToDos.findIndex((toDo) => toDo.id === id);
-      const newToDo = { text, id, category: name as Categories };
+      const newToDo = { text, id, category };
       const newToDos = [...prevToDos];
       newToDos.splice(targetIndex, 1, newToDo);
 
@@ -56,28 +70,26 @@ const ToDo = ({ text, category, id }: IToDo) => {
 
   return (
     <Item>
-      📌
-      <span>{text}</span>
-      <ButtonBox>
-        {category !== Categories.TO_DO && (
-          <button type="button" name="TO_DO" onClick={onChangeState}>
-            <FontAwesomeIcon icon={faArrowRotateLeft} />
-          </button>
-        )}
-        {category !== Categories.DOING && (
-          <button type="button" name="DOING" onClick={onChangeState}>
-            <FontAwesomeIcon icon={faHourglass} />
-          </button>
-        )}
-        {category !== Categories.DONE && (
-          <button type="button" name="DONE" onClick={onChangeState}>
-            <FontAwesomeIcon icon={faCheck} />
-          </button>
-        )}
+      <TextWrap>
+        <div>
+          📌
+          <span>{text}</span>
+        </div>
         <button type="button" onClick={removeToDo}>
           <FontAwesomeIcon icon={faXmark} />
         </button>
-      </ButtonBox>
+      </TextWrap>
+      <CategoryTab>
+        {Object.values(categories).map((cate) => (
+          <Tab
+            key={cate}
+            disabled={cate === category}
+            onClick={() => onChangeState(cate)}
+          >
+            {cate}
+          </Tab>
+        ))}
+      </CategoryTab>
     </Item>
   );
 };
