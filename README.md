@@ -25,3 +25,7 @@
     ├── GlobalStyle.tsx        Global Style Component
     └── theme.tsx              Theme Component
 ```
+
+## 📌 Feat
+
+- Categoires atom을 추가해서 새 카테고리 추가 기능 추가, 카테고리 이동 버튼 변경, 카테고리 로컬 스토리지에 저장 기능 추가
