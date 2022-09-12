@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-const FormBox = styled.form`
+const FormBox = styled.div`
   form {
     display: flex;
     justify-content: space-between;
@@ -64,11 +64,15 @@ const Nothing = styled.p`
   text-align: center;
 `;
 
+interface IForm {
+  newCategory: string;
+}
+
 const ToDoList = () => {
   const toDos = useRecoilValue(toDoSelector);
   const [category, setCategory] = useRecoilState(categoryState);
   const [categories, setCategories] = useRecoilState(categoriesState);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<IForm>();
 
   const onInput = (e: React.FormEvent<HTMLSelectElement>) => {
     const {
@@ -78,8 +82,13 @@ const ToDoList = () => {
     setCategory(value);
   };
 
-  const onValid = (data: any) => {
-    setCategories([...categories, data.category]);
+  const onValid = ({ newCategory }: IForm) => {
+    if (categories.includes(newCategory)) {
+      alert('이미 같은 이름의 카테고리가 있습니다.');
+      return;
+    }
+
+    setCategories([...categories, newCategory]);
   };
 
   return (
@@ -88,7 +97,7 @@ const ToDoList = () => {
         <FormBox onSubmit={handleSubmit(onValid)}>
           <Title>Add Category</Title>
           <form>
-            <input type="text" {...register('category')} />
+            <input type="text" {...register('newCategory')} />
             <button type="submit">
               <FontAwesomeIcon icon={faPlus} />
             </button>
