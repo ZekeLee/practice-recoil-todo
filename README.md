@@ -2,7 +2,7 @@
 
 ## 📌 Deploy URL
 
-- [https://dingunote.github.io/practice-recoil-todo/](https://dingunote.github.io/practice-recoil-todo/)
+- [https://zekelee.github.io/practice-recoil-todo/](https://zekelee.github.io/practice-recoil-todo/)
 
 ## 📌 Skills
 
